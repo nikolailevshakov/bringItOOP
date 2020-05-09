@@ -19,7 +19,7 @@ export default class Form {
     checkMailInputs() {
         const txtInputs = document.querySelectorAll('[type="email"]');
 
-        mailInputs.forEach(input => {
+        txtInputs.forEach(input => {
             input.addEventListener('keypress', function(e) {
                 if (e.key.match(/[^a-z 0-9 @ \.]/ig)) {
                     e.preventDefault();
