@@ -4890,6 +4890,11 @@ window.addEventListener('DOMContentLoaded', function () {
     container: '.page'
   });
   slider.render();
+  var modulePageSlider = new _modules_slider_slider_main__WEBPACK_IMPORTED_MODULE_0__["default"]({
+    container: '.moduleapp',
+    btns: '.next'
+  });
+  modulePageSlider.render();
   var showUpSlider = new _modules_slider_slider_mini__WEBPACK_IMPORTED_MODULE_1__["default"]({
     container: '.showup__content-slider',
     prev: '.showup__prev',
@@ -5338,30 +5343,49 @@ function (_Slider) {
       this.showSlides(this.slideIndex += n);
     }
   }, {
-    key: "render",
-    value: function render() {
+    key: "bindTriggers",
+    value: function bindTriggers() {
       var _this2 = this;
 
+      this.btns.forEach(function (item) {
+        item.addEventListener('click', function () {
+          _this2.plusSlides(1);
+        });
+        item.parentNode.previousElementSibling.addEventListener('click', function (event) {
+          event.preventDefault();
+          _this2.slideIndex = 1;
+
+          _this2.showSlides(_this2.slideIndex);
+        });
+      });
+      this.showSlides(this.slideIndex);
+      document.querySelectorAll('.prevmodule').forEach(function (item) {
+        item.addEventListener('click', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+
+          _this2.plusSlides(-1);
+        });
+      });
+      document.querySelectorAll('.nextmodule').forEach(function (item) {
+        item.addEventListener('click', function (e) {
+          e.stopPropagation();
+          e.preventDefault();
+
+          _this2.plusSlides(1);
+        });
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
       // пытается выполнится блок в трай, если не получается выполняется кэтч и код не ломается
-      try {
+      if (this.container) {
         try {
           this.hanson = document.querySelector('.hanson');
         } catch (e) {}
 
-        this.btns.forEach(function (item) {
-          item.addEventListener('click', function () {
-            _this2.plusSlides(1);
-          });
-          item.parentNode.previousElementSibling.addEventListener('click', function (event) {
-            event.preventDefault();
-            _this2.slideIndex = 1;
-
-            _this2.showSlides(_this2.slideIndex);
-          });
-        });
-        this.showSlides(this.slideIndex);
-      } catch (e) {
-        e;
+        this.bindTriggers();
       }
     }
   }]);
